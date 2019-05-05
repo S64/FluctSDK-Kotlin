@@ -1,5 +1,9 @@
 package jp.s64.kotlin.fluctsdk.rewardedvideo
 
+import co.touchlab.stately.collections.frozenHashMap
+import co.touchlab.stately.collections.frozenHashSet
+import co.touchlab.stately.concurrency.Lock
+import co.touchlab.stately.concurrency.withLock
 import jp.fluct.fluctsdk.FSSRewardedVideo
 import jp.fluct.fluctsdk.FSSRewardedVideoAdErrorBadRequest
 import jp.fluct.fluctsdk.FSSRewardedVideoAdErrorExpired
@@ -17,8 +21,6 @@ import jp.fluct.fluctsdk.FSSRewardedVideoDelegateProtocol
 import jp.s64.kotlin.fluctsdk.PlatformContext
 import platform.Foundation.NSError
 import platform.darwin.NSObject
-import co.touchlab.stately.collections.frozenHashMap
-import co.touchlab.stately.collections.frozenHashSet
 
 actual data class RewardedVideo(
         private val rv: FSSRewardedVideo,
@@ -28,6 +30,9 @@ actual data class RewardedVideo(
 ) {
 
     actual companion object {
+
+        @ThreadLocal
+        internal val lock = Lock()
 
         actual fun getInstance(
             groupId: GroupId,
@@ -45,105 +50,125 @@ actual data class RewardedVideo(
             )
         }
 
+        @ThreadLocal
         private val globalDelegate = object : NSObject(), FSSRewardedVideoDelegateProtocol {
 
-            override fun rewardedVideoDidAppearForGroupId(groupId: String, unitId: String) {
-                localListeners.get(UnitPair(groupId = groupId, unitId = unitId))!!
-                        .forEach {
-                            it.didAppear()
-                        }
+            override fun rewardedVideoDidAppearForGroupId(groupId: GroupId, unitId: UnitId) {
+                lock.withLock {
+                    localListeners.get(UnitPair(groupId = groupId, unitId = unitId))!!
+                            .forEach {
+                                it.didAppear()
+                            }
+                }
             }
 
-            override fun rewardedVideoDidDisappearForGroupId(groupId: String, unitId: String) {
-                localListeners.get(UnitPair(groupId = groupId, unitId = unitId))!!
-                        .forEach {
-                            it.didDisappear()
-                        }
+            override fun rewardedVideoDidDisappearForGroupId(groupId: GroupId, unitId: UnitId) {
+                lock.withLock {
+                    localListeners.get(UnitPair(groupId = groupId, unitId = unitId))!!
+                            .forEach {
+                                it.didDisappear()
+                            }
+                }
             }
 
-            override fun rewardedVideoDidFailToLoadForGroupId(groupId: String, unitId: String, error: NSError) {
-                localListeners.get(UnitPair(groupId = groupId, unitId = unitId))!!
-                        .forEach {
-                            it.didFailToLoad(error)
-                        }
+            override fun rewardedVideoDidFailToLoadForGroupId(groupId: GroupId, unitId: UnitId, error: NSError) {
+                lock.withLock {
+                    localListeners.get(UnitPair(groupId = groupId, unitId = unitId))!!
+                            .forEach {
+                                it.didFailToLoad(error)
+                            }
+                }
             }
 
-            override fun rewardedVideoDidFailToPlayForGroupId(groupId: String, unitId: String, error: NSError) {
-                localListeners.get(UnitPair(groupId = groupId, unitId = unitId))!!
-                        .forEach {
-                            it.didFailToPlay(error)
-                        }
+            override fun rewardedVideoDidFailToPlayForGroupId(groupId: GroupId, unitId: UnitId, error: NSError) {
+                lock.withLock {
+                    localListeners.get(UnitPair(groupId = groupId, unitId = unitId))!!
+                            .forEach {
+                                it.didFailToPlay(error)
+                            }
+                }
             }
 
-            override fun rewardedVideoDidLoadForGroupID(groupId: String, unitId: String) {
-                localListeners.get(UnitPair(groupId = groupId, unitId = unitId))!!
-                        .forEach {
-                            it.didLoad()
-                        }
+            override fun rewardedVideoDidLoadForGroupID(groupId: GroupId, unitId: UnitId) {
+                lock.withLock {
+                    localListeners.get(UnitPair(groupId = groupId, unitId = unitId))!!
+                            .forEach {
+                                it.didLoad()
+                            }
+                }
             }
 
-            override fun rewardedVideoShouldRewardForGroupID(groupId: String, unitId: String) {
-                localListeners.get(UnitPair(groupId = groupId, unitId = unitId))!!
-                        .forEach {
-                            it.shouldReward()
-                        }
+            override fun rewardedVideoShouldRewardForGroupID(groupId: GroupId, unitId: UnitId) {
+                lock.withLock {
+                    localListeners.get(UnitPair(groupId = groupId, unitId = unitId))!!
+                            .forEach {
+                                it.shouldReward()
+                            }
+                }
             }
 
-            override fun rewardedVideoWillAppearForGroupId(groupId: String, unitId: String) {
+            override fun rewardedVideoWillAppearForGroupId(groupId: GroupId, unitId: UnitId) {
                 // no-op
             }
 
-            override fun rewardedVideoWillDisappearForGroupId(groupId: String, unitId: String) {
+            override fun rewardedVideoWillDisappearForGroupId(groupId: GroupId, unitId: UnitId) {
                 // no-op
             }
         }
 
+        @ThreadLocal
         val localListeners = frozenHashMap<UnitPair, MutableSet<LocalListener>>()
-
 
     }
 
+    @ThreadLocal
     private val unitPair = UnitPair(
             groupId = groupId,
             unitId = unitId
     )
 
     actual fun load(block: (Result<ViewableRewardedVideo, FluctErrorException>) -> Unit) {
-        localListeners.getOrPut(unitPair, { frozenHashSet() })
-                .add(
-                        object : LocalListener {
+        val listener = object : LocalListener {
 
-                            override fun didFailToLoad(err: NSError) {
-                                finalize(err)
-                            }
+            override fun didFailToLoad(err: NSError) {
+                finalize(err)
+            }
 
-                            override fun didLoad() {
-                                finalize(null)
-                            }
+            override fun didLoad() {
+                finalize(null)
+            }
 
-                            private fun finalize(err: NSError?) {
-                                localListeners.get(unitPair)!!
-                                        .remove(this)
+            private fun finalize(err: NSError?) {
+                lock.withLock {
+                    localListeners.get(unitPair)!!
+                            .remove(this)
+                }
 
-                                if (err == null) {
-                                    block(Success(
-                                            ViewableRewardedVideo(
-                                                    rv = rv,
-                                                    unitId = unitId,
-                                                    groupId = groupId,
-                                                    context = context
-                                            )
-                                    ))
-                                } else {
-                                    block(Failure(
-                                            FluctErrorException(convertFromNSError(err))
-                                    ))
-                                }
-                            }
+                if (err == null) {
+                    block(Success(
+                            ViewableRewardedVideo(
+                                    rv = rv,
+                                    groupId = groupId,
+                                    unitId = unitId,
+                                    context = context
+                            )
+                    ))
+                } else {
+                    block(Failure(
+                            FluctErrorException(convertFromNSError(err))
+                    ))
+                }
+            }
 
-                        }
-                )
-        rv.loadRewardedVideoWithGroupId(unitId, groupId)
+        }
+
+        lock.withLock {
+            val setRef = localListeners.getOrElse(unitPair, { frozenHashSet() })
+            setRef.add(listener)
+            localListeners.put(unitPair, setRef)
+        }
+
+        rv.loadRewardedVideoWithGroupId(groupId = groupId, unitId = unitId)
     }
 
     interface LocalListener {
@@ -172,43 +197,49 @@ actual data class ViewableRewardedVideo(
 
 ) {
 
+    @ThreadLocal
     private val unitPair = UnitPair(
             groupId = groupId,
             unitId = unitId
     )
 
     actual fun show(block: (Result<Visibility, FluctErrorException>) -> Unit) {
-        RewardedVideo.localListeners.get(unitPair)!!
-                .add(
-                        object : RewardedVideo.LocalListener {
+        val listener = object : RewardedVideo.LocalListener {
 
-                            override fun didFailToPlay(err: NSError) {
-                                block(
-                                        Failure(FluctErrorException(convertFromNSError(err)))
-                                )
-                                finalize()
-                            }
-
-                            override fun didAppear() {
-                                block(Success(Visibility.OPENED))
-                            }
-
-                            override fun didDisappear() {
-                                block(Success(Visibility.CLOSED))
-                                finalize()
-                            }
-
-                            override fun shouldReward() {
-                                block(Success(Visibility.SHOULD_REWARD))
-                            }
-
-                            private fun finalize() {
-                                RewardedVideo.localListeners.get(unitPair)!!
-                                        .remove(this)
-                            }
-
-                        }
+            override fun didFailToPlay(err: NSError) {
+                block(
+                        Failure(FluctErrorException(convertFromNSError(err)))
                 )
+                finalize()
+            }
+
+            override fun didAppear() {
+                block(Success(Visibility.OPENED))
+            }
+
+            override fun didDisappear() {
+                block(Success(Visibility.CLOSED))
+                finalize()
+            }
+
+            override fun shouldReward() {
+                block(Success(Visibility.SHOULD_REWARD))
+            }
+
+            private fun finalize() {
+                RewardedVideo.lock.withLock {
+                    RewardedVideo.localListeners.get(unitPair)!!
+                            .remove(this)
+                }
+            }
+
+        }
+
+        RewardedVideo.lock.withLock {
+            RewardedVideo.localListeners.get(unitPair)!!
+                    .add(listener)
+        }
+
         rv.presentRewardedVideoAdForGroupId(groupId, unitId, context)
     }
 
