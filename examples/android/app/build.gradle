@@ -44,7 +44,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     // FluctSDK-Kotlin
-    implementation "jp.s64.kotlin:fluctsdk:${rootProject.version}"
+    implementation "jp.s64.kotlin:fluctsdk-kotlin:${rootProject.version}"
 
     // region FluctSDK-Android Mediation: Tapjoy
     implementation 'com.tapjoy:tapjoy-android-sdk:12.2.1@aar'
