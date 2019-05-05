@@ -1,0 +1,46 @@
+PODS:
+  - FluctSDK (5.1.0)
+  - FluctSDK-MediationAdapter/maio (5.1.0):
+    - FluctSDK
+    - MaioSDK
+  - FluctSDK-MediationAdapter/Tapjoy (5.1.0):
+    - FluctSDK
+    - TapjoySDK
+  - FluctSDK-MediationAdapter/UnityAds (5.1.0):
+    - FluctSDK
+    - UnityAds
+  - MaioSDK (1.4.6)
+  - mpp (0.0.1-SNAPSHOT1):
+    - FluctSDK (= 5.1.0)
+  - TapjoySDK (12.2.1)
+  - UnityAds (3.0.3)
+
+DEPENDENCIES:
+  - FluctSDK-MediationAdapter/maio (= 5.1.0)
+  - FluctSDK-MediationAdapter/Tapjoy (= 5.1.0)
+  - FluctSDK-MediationAdapter/UnityAds (= 5.1.0)
+  - mpp (from `../`)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - FluctSDK
+    - FluctSDK-MediationAdapter
+    - MaioSDK
+    - TapjoySDK
+    - UnityAds
+
+EXTERNAL SOURCES:
+  mpp:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  FluctSDK: 512b8ae7f07a2065e029ba105e2e85d3bb679b2d
+  FluctSDK-MediationAdapter: 2470c231cbe02f579404ccc01bd930787db3c9a1
+  MaioSDK: 291455fec207dc458ce2a7e74a8b34a67546e9b6
+  mpp: 6a98152eca689309d0add6b878abe5d13191360b
+  TapjoySDK: eb0487f758130d99c8f0f0ad20218637d69513fc
+  UnityAds: a7737865bf263bc14a469d4ae47c51703fa294bc
+
+PODFILE CHECKSUM: 5930f69ebb4e597f0210fd3ad2b15752bcf1758a
+
+COCOAPODS: 1.5.0

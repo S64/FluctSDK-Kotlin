@@ -1,0 +1,76 @@
+buildscript {
+    ext {
+        artifactExts = [
+                'androidVersionCode': 1,
+        ]
+        versions = [
+                'kotlin': '1.3.31',
+                'android_gradle': '3.3.2',
+        ]
+        fluctSdkVersions = [
+                'ios': '5.1.0',
+                'android': '5.3.2',
+        ]
+    }
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:${versions.android_gradle}"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+    }
+}
+
+wrapper {
+    gradleVersion = '4.10.3'
+    distributionType = 'all'
+}
+
+group = 'jp.s64.kotlin.example.myfluctapp.mpp'
+version = '0.0.1-SNAPSHOT1'
+
+apply plugin: 'org.jetbrains.kotlin.multiplatform'
+apply plugin: 'org.jetbrains.kotlin.native.cocoapods'
+
+repositories {
+    google()
+    mavenCentral()
+    jcenter()
+    maven { url 'https://raw.github.com/voyagegroup/FluctSDK-Android/master/m2/repository/' }
+    mavenLocal()
+}
+
+kotlin {
+    cocoapods {
+        homepage = 'https://example.com'
+        summary = 'Dummy'
+        pod('FluctSDK', fluctSdkVersions.ios)
+    }
+
+    if ( project.findProperty('kotlin.native.cocoapods.target') == 'ios_arm' ) {
+        iosArm64('ios')
+    } else {
+        iosX64('ios')
+    }
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
+                implementation "jp.s64.kotlin:fluctsdk:${version}"
+            }
+        }
+        iosMain {
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
+            }
+        }
+    }
+}
+
+configurations {
+    compileClasspath
+}

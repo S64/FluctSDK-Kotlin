@@ -1,0 +1,9 @@
+/.gradle
+/local.properties
+/.idea
+/build
+/*.iml
+/.project
+/.settings
+/.classpath
+/mpp.podspec
