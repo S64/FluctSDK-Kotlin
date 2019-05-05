@@ -121,6 +121,8 @@ actual data class RewardedVideo(
 
                         }
                 )
+        
+        rv.loadAd()
     }
 
     interface LocalListener {
