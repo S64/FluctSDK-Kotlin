@@ -23,7 +23,8 @@ import co.touchlab.stately.collections.frozenHashSet
 actual data class RewardedVideo(
         private val rv: FSSRewardedVideo,
         private val groupId: GroupId,
-        private val unitId: UnitId
+        private val unitId: UnitId,
+        private val context: PlatformContext
 ) {
 
     actual companion object {
@@ -39,7 +40,8 @@ actual data class RewardedVideo(
                                 this.delegate = globalDelegate
                             },
                     groupId = groupId,
-                    unitId = unitId
+                    unitId = unitId,
+                    context = context
             )
         }
 
@@ -95,7 +97,7 @@ actual data class RewardedVideo(
                 // no-op
             }
         }
-        
+
         val localListeners = frozenHashMap<UnitPair, MutableSet<LocalListener>>()
 
 
@@ -128,7 +130,8 @@ actual data class RewardedVideo(
                                             ViewableRewardedVideo(
                                                     rv = rv,
                                                     unitId = unitId,
-                                                    groupId = groupId
+                                                    groupId = groupId,
+                                                    context = context
                                             )
                                     ))
                                 } else {
@@ -140,6 +143,7 @@ actual data class RewardedVideo(
 
                         }
                 )
+        rv.loadRewardedVideoWithGroupId(unitId, groupId)
     }
 
     interface LocalListener {
@@ -163,7 +167,8 @@ actual data class RewardedVideo(
 actual data class ViewableRewardedVideo(
         private val rv: FSSRewardedVideo,
         private val groupId: GroupId,
-        private val unitId: UnitId
+        private val unitId: UnitId,
+        private val context: PlatformContext
 
 ) {
 
@@ -204,6 +209,7 @@ actual data class ViewableRewardedVideo(
 
                         }
                 )
+        rv.presentRewardedVideoAdForGroupId(groupId, unitId, context)
     }
 
 }
