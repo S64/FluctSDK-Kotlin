@@ -35,12 +35,15 @@ actual data class RewardedVideo(
                         }
             }
 
-            override fun onStarted(p0: String?, p1: String?) {
+            override fun onStarted(groupId: GroupId, unitId: UnitId) {
                 // no-op
             }
 
-            override fun onClosed(p0: String?, p1: String?) {
-                // no-op
+            override fun onClosed(groupId: GroupId, unitId: UnitId) {
+                localListeners.get(UnitPair(groupId = groupId, unitId = unitId))!!
+                        .forEach {
+                            it.onClosed()
+                        }
             }
 
             override fun onLoaded(groupId: GroupId, unitId: UnitId) {
