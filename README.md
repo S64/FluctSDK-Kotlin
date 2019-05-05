@@ -1,7 +1,7 @@
 # FluctSDK-Kotlin
 
 An unofficial [Kotlin Multiplatform](https://kotlinlang.org/docs/reference/multiplatform.html) bindings library of [FluctSDK](https://github.com/voyagegroup/FluctSDK-iOS).  
-Supports "Rewarded Video Ads" feature on iOS, Android.
+This Library supports "Rewarded Video Ads" feature on [Kotlin MPP Project (iOS, Android)](./examples/mpp) and [Pure Android app](./examples/android).
 
 ## Disclaimer
 
@@ -37,4 +37,4 @@ sourceSets {
 }
 ```
 
-Full demos are in [`examples`](./examples).
+Full demos are in [`/examples`](./examples).
