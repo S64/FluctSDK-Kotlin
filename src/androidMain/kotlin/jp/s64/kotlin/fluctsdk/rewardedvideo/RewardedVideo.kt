@@ -121,7 +121,7 @@ actual data class RewardedVideo(
 
                         }
                 )
-        
+
         rv.loadAd()
     }
 
