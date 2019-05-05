@@ -1,2 +1,2 @@
-rootProject.name = 'fluctsdk-kotlin'
+rootProject.name = 'fluctsdk'
 enableFeaturePreview('GRADLE_METADATA')
