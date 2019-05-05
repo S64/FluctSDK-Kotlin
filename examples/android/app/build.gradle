@@ -1,0 +1,58 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "jp.s64.kotlin.example.myfluctapp.android"
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode rootProject.ext.artifactExts.androidVersionCode
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+    jcenter()
+
+    // FluctSDK-Android
+    maven { url 'https://raw.github.com/voyagegroup/FluctSDK-Android/master/m2/repository/' }
+
+    // FluctSDK-Android Mediation: Tapjoy
+    maven { url 'https://tapjoy.bintray.com/maven' }
+
+    mavenLocal()
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${rootProject.ext.versions.kotlin}"
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.core:core-ktx:1.0.1'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+    // FluctSDK-Kotlin
+    implementation "jp.s64.kotlin:fluctsdk:${rootProject.version}"
+
+    // region FluctSDK-Android Mediation: Tapjoy
+    implementation 'com.tapjoy:tapjoy-android-sdk:12.2.1@aar'
+    implementation 'jp.fluct.mediation:rewardedvideo-mediation-tapjoy:2.3.2'
+    // endregion
+
+    testImplementation 'junit:junit:4.12'
+
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+}
