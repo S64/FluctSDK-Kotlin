@@ -47,7 +47,7 @@ repositories {
 
 kotlin {
     android {
-        publishLibraryVariants('release')
+        publishLibraryVariants('debug', 'release')
     }
 
     def ios64 = iosArm64('ios')
