@@ -193,6 +193,8 @@ actual data class ViewableRewardedVideo(
 
                         }
                 )
+
+        rv.show()
     }
 
 }
