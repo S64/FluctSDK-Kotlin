@@ -1,0 +1,73 @@
+{
+  "formatVersion": "0.4",
+  "component": {
+    "url": "../../fluctsdk/0.0.1-SNAPSHOT1/fluctsdk-0.0.1-SNAPSHOT1.module",
+    "group": "jp.s64.kotlin",
+    "module": "fluctsdk",
+    "version": "0.0.1-SNAPSHOT1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "4.10.3",
+      "buildId": "oxxofrs4yvd4vnuwey55gw3jsa"
+    }
+  },
+  "variants": [
+    {
+      "name": "iosX64-api",
+      "attributes": {
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_x64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "1.3.31"
+          }
+        },
+        {
+          "group": "co.touchlab",
+          "module": "stately",
+          "version": {
+            "requires": "0.7.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "fluctsdk.klib",
+          "url": "fluctsdk-iosx64-0.0.1-SNAPSHOT1.klib",
+          "size": 37483,
+          "sha1": "613a4b6d63b57940f32891bdfa8d2529ac954fa6",
+          "md5": "e21f72e96cb7afcc94b19a8c4fc7ec65"
+        },
+        {
+          "name": "fluctsdk-cinterop-fluctSdkIos.klib",
+          "url": "fluctsdk-iosx64-0.0.1-SNAPSHOT1-cinterop-fluctSdkIos.klib",
+          "size": 447401,
+          "sha1": "2ef50d7b37ca142d8695d0ffbaa61707d44170c0",
+          "md5": "ed6812e20cfccea1cf36ec2e6ad698d2"
+        }
+      ]
+    },
+    {
+      "name": "metadata-api",
+      "attributes": {
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "available-at": {
+        "url": "../../fluctsdk-metadata/0.0.1-SNAPSHOT1/fluctsdk-metadata-0.0.1-SNAPSHOT1.module",
+        "group": "jp.s64.kotlin",
+        "module": "fluctsdk-metadata",
+        "version": "0.0.1-SNAPSHOT1"
+      }
+    }
+  ]
+}

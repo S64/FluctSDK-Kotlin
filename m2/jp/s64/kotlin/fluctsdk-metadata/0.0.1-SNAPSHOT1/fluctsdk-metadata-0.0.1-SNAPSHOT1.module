@@ -1,0 +1,36 @@
+{
+  "formatVersion": "0.4",
+  "component": {
+    "url": "../../fluctsdk/0.0.1-SNAPSHOT1/fluctsdk-0.0.1-SNAPSHOT1.module",
+    "group": "jp.s64.kotlin",
+    "module": "fluctsdk",
+    "version": "0.0.1-SNAPSHOT1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "4.10.3",
+      "buildId": "oxxofrs4yvd4vnuwey55gw3jsa"
+    }
+  },
+  "variants": [
+    {
+      "name": "metadata-api",
+      "attributes": {
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "files": [
+        {
+          "name": "fluctsdk-metadata-0.0.1-SNAPSHOT1.jar",
+          "url": "fluctsdk-metadata-0.0.1-SNAPSHOT1.jar",
+          "size": 6790,
+          "sha1": "34e691576ac8dd7f8ff33d1e6416f884a42e4daf",
+          "md5": "364012a1a869574328bcfd7fcd47453c"
+        }
+      ]
+    }
+  ]
+}

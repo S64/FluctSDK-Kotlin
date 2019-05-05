@@ -1,0 +1,124 @@
+{
+  "formatVersion": "0.4",
+  "component": {
+    "group": "jp.s64.kotlin",
+    "module": "fluctsdk",
+    "version": "0.0.1-SNAPSHOT1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "4.10.3",
+      "buildId": "oxxofrs4yvd4vnuwey55gw3jsa"
+    }
+  },
+  "variants": [
+    {
+      "name": "android-debugApiElements",
+      "attributes": {
+        "com.android.build.api.attributes.BuildTypeAttr": "debug",
+        "com.android.build.api.attributes.VariantAttr": "debug",
+        "com.android.build.gradle.internal.dependency.AndroidTypeAttr": "Aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../fluctsdk-android-debug/0.0.1-SNAPSHOT1/fluctsdk-android-debug-0.0.1-SNAPSHOT1.module",
+        "group": "jp.s64.kotlin",
+        "module": "fluctsdk-android-debug",
+        "version": "0.0.1-SNAPSHOT1"
+      }
+    },
+    {
+      "name": "android-debugRuntimeElements",
+      "attributes": {
+        "com.android.build.api.attributes.BuildTypeAttr": "debug",
+        "com.android.build.api.attributes.VariantAttr": "debug",
+        "com.android.build.gradle.internal.dependency.AndroidTypeAttr": "Aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../fluctsdk-android-debug/0.0.1-SNAPSHOT1/fluctsdk-android-debug-0.0.1-SNAPSHOT1.module",
+        "group": "jp.s64.kotlin",
+        "module": "fluctsdk-android-debug",
+        "version": "0.0.1-SNAPSHOT1"
+      }
+    },
+    {
+      "name": "android-releaseApiElements",
+      "attributes": {
+        "com.android.build.api.attributes.BuildTypeAttr": "release",
+        "com.android.build.api.attributes.VariantAttr": "release",
+        "com.android.build.gradle.internal.dependency.AndroidTypeAttr": "Aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../fluctsdk-android/0.0.1-SNAPSHOT1/fluctsdk-android-0.0.1-SNAPSHOT1.module",
+        "group": "jp.s64.kotlin",
+        "module": "fluctsdk-android",
+        "version": "0.0.1-SNAPSHOT1"
+      }
+    },
+    {
+      "name": "android-releaseRuntimeElements",
+      "attributes": {
+        "com.android.build.api.attributes.BuildTypeAttr": "release",
+        "com.android.build.api.attributes.VariantAttr": "release",
+        "com.android.build.gradle.internal.dependency.AndroidTypeAttr": "Aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../fluctsdk-android/0.0.1-SNAPSHOT1/fluctsdk-android-0.0.1-SNAPSHOT1.module",
+        "group": "jp.s64.kotlin",
+        "module": "fluctsdk-android",
+        "version": "0.0.1-SNAPSHOT1"
+      }
+    },
+    {
+      "name": "ios-api",
+      "attributes": {
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../fluctsdk-ios/0.0.1-SNAPSHOT1/fluctsdk-ios-0.0.1-SNAPSHOT1.module",
+        "group": "jp.s64.kotlin",
+        "module": "fluctsdk-ios",
+        "version": "0.0.1-SNAPSHOT1"
+      }
+    },
+    {
+      "name": "iosX64-api",
+      "attributes": {
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_x64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../fluctsdk-iosx64/0.0.1-SNAPSHOT1/fluctsdk-iosx64-0.0.1-SNAPSHOT1.module",
+        "group": "jp.s64.kotlin",
+        "module": "fluctsdk-iosx64",
+        "version": "0.0.1-SNAPSHOT1"
+      }
+    },
+    {
+      "name": "metadata-api",
+      "attributes": {
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "available-at": {
+        "url": "../../fluctsdk-metadata/0.0.1-SNAPSHOT1/fluctsdk-metadata-0.0.1-SNAPSHOT1.module",
+        "group": "jp.s64.kotlin",
+        "module": "fluctsdk-metadata",
+        "version": "0.0.1-SNAPSHOT1"
+      }
+    }
+  ]
+}
