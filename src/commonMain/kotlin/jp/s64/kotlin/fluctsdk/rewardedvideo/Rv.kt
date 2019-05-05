@@ -2,8 +2,6 @@ package jp.s64.kotlin.fluctsdk.rewardedvideo
 
 import jp.s64.kotlin.fluctsdk.PlatformContext
 import jp.s64.kotlin.fluctsdk.PlatformType
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.contract
 
 typealias GroupId = String
 typealias UnitId = String
