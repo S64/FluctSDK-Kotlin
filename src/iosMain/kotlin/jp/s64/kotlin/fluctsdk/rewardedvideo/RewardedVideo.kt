@@ -17,6 +17,8 @@ import jp.fluct.fluctsdk.FSSRewardedVideoDelegateProtocol
 import jp.s64.kotlin.fluctsdk.PlatformContext
 import platform.Foundation.NSError
 import platform.darwin.NSObject
+import co.touchlab.stately.collections.frozenHashMap
+import co.touchlab.stately.collections.frozenHashSet
 
 actual data class RewardedVideo(
         private val rv: FSSRewardedVideo,
@@ -93,8 +95,9 @@ actual data class RewardedVideo(
                 // no-op
             }
         }
+        
+        val localListeners = frozenHashMap<UnitPair, MutableSet<LocalListener>>()
 
-        val localListeners = mutableMapOf<UnitPair, MutableSet<LocalListener>>()
 
     }
 
@@ -104,7 +107,7 @@ actual data class RewardedVideo(
     )
 
     actual fun load(block: (Result<ViewableRewardedVideo, FluctErrorException>) -> Unit) {
-        localListeners.getOrPut(unitPair, { mutableSetOf() })
+        localListeners.getOrPut(unitPair, { frozenHashSet() })
                 .add(
                         object : LocalListener {
 

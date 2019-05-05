@@ -43,6 +43,7 @@ repositories {
     mavenCentral()
     jcenter()
     maven { url 'https://raw.github.com/voyagegroup/FluctSDK-Android/master/m2/repository/' }
+    maven { url 'https://dl.bintray.com/touchlabpublic/kotlin' }
 }
 
 kotlin {
@@ -80,6 +81,7 @@ kotlin {
         iosMain {
             dependencies {
                 implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
+                implementation 'co.touchlab:stately:0.7.0'
             }
         }
         iosSim.compilations.main.defaultSourceSet {
