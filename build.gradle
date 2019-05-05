@@ -1,0 +1,111 @@
+buildscript {
+    ext {
+        artifactExts = [
+                'androidVersionCode': 1,
+        ]
+        versions = [
+                'kotlin': '1.3.31',
+                'android_gradle': '3.3.2',
+        ]
+        fluctSdkVersions = [
+                'ios': '5.1.0',
+                'android': '5.3.2',
+        ]
+    }
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:${versions.android_gradle}"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+        classpath 'de.undercouch:gradle-download-task:3.4.3'
+    }
+}
+
+wrapper {
+    gradleVersion = '4.10.3'
+    distributionType = 'all'
+}
+
+group = 'jp.s64.kotlin'
+version = '0.0.1-SNAPSHOT1'
+
+apply plugin: 'org.jetbrains.kotlin.multiplatform'
+apply plugin: 'maven-publish'
+apply from: 'android.gradle'
+apply plugin: 'de.undercouch.download'
+
+repositories {
+    google()
+    mavenCentral()
+    jcenter()
+    maven { url 'https://raw.github.com/voyagegroup/FluctSDK-Android/master/m2/repository/' }
+}
+
+kotlin {
+    android {
+        publishLibraryVariants('release')
+    }
+
+    def ios64 = iosArm64('ios')
+    def iosSim = iosX64('iosX64')
+    def iosTargets = [ios64, iosSim]
+
+    configure(iosTargets) {
+        compilations.main {
+            cinterops {
+                fluctSdkIos {
+                    defFile project.file('src/iosMain/FluctSDK.def')
+                    includeDirs project.file("./FluctSDK-iOS-${fluctSdkVersions.ios}/FluctSDK.embeddedframework/FluctSDK.framework/Headers")
+                }
+            }
+        }
+    }
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
+            }
+        }
+        androidMain {
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
+                api "jp.fluct:FluctSDK:${fluctSdkVersions.android}"
+            }
+        }
+        iosMain {
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
+            }
+        }
+        iosSim.compilations.main.defaultSourceSet {
+            dependsOn iosMain
+        }
+    }
+}
+
+configurations {
+    compileClasspath
+}
+
+task downloadFluctSdkIosArchive(type: Download) {
+    src "https://github.com/voyagegroup/FluctSDK-iOS/archive/${fluctSdkVersions.ios}.zip"
+    dest new File('./FluctSDK-iOS.zip')
+    overwrite false
+    onlyIfModified true
+}
+
+task downloadAndUnzipFluctSdkIosArchive(dependsOn: downloadFluctSdkIosArchive, type: Copy) {
+    from zipTree(downloadFluctSdkIosArchive.dest)
+    into new File('./')
+}
+downloadAndUnzipFluctSdkIosArchive.onlyIf {
+    !file("./FluctSDK-iOS-${fluctSdkVersions.ios}").exists()
+}
+
+cinteropFluctSdkIosIos.dependsOn downloadAndUnzipFluctSdkIosArchive
+cinteropFluctSdkIosIosX64.dependsOn downloadAndUnzipFluctSdkIosArchive

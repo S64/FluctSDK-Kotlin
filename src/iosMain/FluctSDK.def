@@ -1,0 +1,4 @@
+package = jp.fluct.fluctsdk
+language = Objective-C
+headerFilter = **
+headers = FluctSDK.h

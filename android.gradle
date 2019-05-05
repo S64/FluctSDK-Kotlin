@@ -1,0 +1,24 @@
+apply plugin: 'com.android.library'
+
+android {
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 28
+        compileSdkVersion 28
+        versionCode artifactExts.androidVersionCode
+        versionName version
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    sourceSets {
+        main {
+            def root = 'src/androidMain'
+            manifest.srcFile "${root}/AndroidManifest.xml"
+        }
+    }
+}
