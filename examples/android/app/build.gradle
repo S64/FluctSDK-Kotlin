@@ -33,6 +33,9 @@ repositories {
     // FluctSDK-Android Mediation: Tapjoy
     maven { url 'https://tapjoy.bintray.com/maven' }
 
+    // FluctSDK-Kotlin
+    maven { url 'https://s64.github.io/FluctSDK-Kotlin/m2' }
+
     mavenLocal()
 }
 

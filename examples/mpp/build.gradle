@@ -39,7 +39,13 @@ repositories {
     google()
     mavenCentral()
     jcenter()
+
+    // FluctSDK-Android
     maven { url 'https://raw.github.com/voyagegroup/FluctSDK-Android/master/m2/repository/' }
+
+    // FluctSDK-Kotlin
+    maven { url 'https://s64.github.io/FluctSDK-Kotlin/m2' }
+
     mavenLocal()
 }
 

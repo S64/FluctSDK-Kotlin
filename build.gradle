@@ -111,3 +111,11 @@ downloadAndUnzipFluctSdkIosArchive.onlyIf {
 
 cinteropFluctSdkIosIos.dependsOn downloadAndUnzipFluctSdkIosArchive
 cinteropFluctSdkIosIosX64.dependsOn downloadAndUnzipFluctSdkIosArchive
+
+publishing {
+    repositories {
+        maven {
+            url = "${projectDir}/FluctSDK-Kotlin_gh-pages/m2"
+        }
+    }
+}
