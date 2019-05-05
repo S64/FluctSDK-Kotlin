@@ -7,3 +7,34 @@ Supports "Rewarded Video Ads" feature on iOS, Android.
 
 "FluctSDK" and their I/F are the property of [fluct, Inc](https://corp.fluct.jp).
 This library is developed to based on the [published official document](https://github.com/voyagegroup/FluctSDK-iOS/wiki).
+
+## Usages
+
+Enable "Gradle Module Metadata" feature in `settings.gradle`:
+
+```groovy
+enableFeaturePreview('GRADLE_METADATA')
+```
+
+Add repository:
+
+```groovy
+repositories {
+    // FluctSDK-Kotlin
+    maven { url 'https://s64.github.io/FluctSDK-Kotlin/m2' }
+}
+```
+
+Add module in `common` sourceSet:
+
+```groovy
+sourceSets {
+    commonMain {
+        dependencies {
+            implementation 'jp.s64.kotlin:fluctsdk:0.0.1-SNAPSHOT1'
+        }
+    }
+}
+```
+
+Full demos are in [`examples`](./examples).
