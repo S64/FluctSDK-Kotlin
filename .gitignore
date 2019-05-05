@@ -2,6 +2,6 @@
 /local.properties
 /.idea
 /build
-*.iml
+/*.iml
 /FluctSDK-iOS.zip
 /FluctSDK-iOS-*/
